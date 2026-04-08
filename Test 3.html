@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryn's Roblox Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #ff6b35;
+            width: auto;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-shop {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn-shop:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 2rem 0 1.5rem;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        .filter-btn:hover {
+            border-color: #ff6b35;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-game {
+            font-size: 0.85rem;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            color: #ff6b35;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .product-rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .quick-buy-form {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .payment-close {
+            float: right;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #999;
+            font-weight: bold;
+        }
+
+        .payment-close:hover {
+            color: #333;
+        }
+
+        .payment-method-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .payment-method-btn:hover {
+            border-color: #ff6b35;
+            background: #fff5f0;
+        }
+
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 250;
+        }
+
+        .chat-box.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f9f9f9;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+
+        .chat-message.bot .chat-bubble {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .chat-send-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .chat-send-btn:hover {
+            background: #f7931e;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: #ff6b35;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-box {
+                width: 100%;
+                height: 60%;
+                bottom: 0;
+                right: 0;
+                border-radius: 12px 12px 0 0;
+            }
+        }
+
+        .sales-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .sales-table th {
+            background: #ff6b35;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .sales-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sales-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .sales-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .cart-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 3rem;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .cart-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .cart-table th,
+        .cart-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .cart-table th {
+            background: #ff6b35;
+            color: white;
+            font-weight: 600;
+        }
+
+        .cart-item-remove {
+            background: transparent;
+            border: none;
+            color: #ff6b35;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .no-sales {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .no-sales p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">🎮 Ryn's Roblox Marketplace
+            </div>
+            <nav class="nav-links">
+                <a onclick="scrollToSection('shop')">Shop</a>
+                <a onclick="scrollToSection('shoppingList')">Cart</a>
+                <a onclick="scrollToSection('sales')">Sales</a>
+                <a onclick="scrollToSection('about')">About</a>
+                <a onclick="scrollToSection('contact')">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <span class="payment-close" onclick="closePayment()">&times;</span>
+            <h2 style="color: #333; margin-bottom: 2rem; text-align: center;">Select Payment Method</h2>
+            <div id="paymentMethodsList"></div>
+            <p style="text-align: center; color: #666; font-size: 0.9rem; margin-top: 1.5rem;">
+                ✓ Secure Payment • ✓ Instant Delivery • ✓ Verified Seller
+            </p>
+        </div>
+    </div>
+
+
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <h3>Support Chat</h3>
+            <button class="chat-close" onclick="closeChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type a message...">
+            <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Premium Roblox Game Items & Services</h1>
+            <p>Buy verified in-game items, passes, and services from trusted sellers</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('shop')">Start Shopping</button>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="shop">Featured Items</h2>
+        <div class="products-grid" id="productsGrid"></div>
+
+        <h2 class="section-title" id="shoppingList">Shopping List</h2>
+        <div class="cart-section">
+            <div class="cart-summary">
+                <div id="cartTotalSummary" class="stat-label">Total: $0.00</div>
+                <button class="btn btn-shop" onclick="checkoutCart()">Checkout Cart</button>
+            </div>
+            <table class="cart-table" id="cartTable">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody"></tbody>
+            </table>
+            <div id="cartEmpty" class="no-sales">
+                <p>🛒 Your shopping list is empty</p>
+                <p style="font-size: 0.9rem;">Add items to your cart and they will appear here.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="sales">Your Sales</h2>
+        <div class="sales-section">
+            <div class="sales-stats" id="salesStats"></div>
+            <table class="sales-table" id="salesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Item</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTableBody">
+                </tbody>
+            </table>
+            <div id="noSalesMessage" class="no-sales">
+                <p>📊 No sales yet</p>
+                <p style="font-size: 0.9rem;">Your sales will appear here once customers complete purchases</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Why Buy From Us?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Verified Sellers</h3>
+                <p>All sellers are verified and trusted in the community</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Delivery</h3>
+                <p>Items delivered directly to your account immediately</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>100% Safe</h3>
+                <p>Secure transactions with buyer protection</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>24/7 Support</h3>
+                <p>Live chat support available anytime</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="about">About Us</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6; text-align: center; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Ryn's Roblox Marketplace is the trusted marketplace for buying in-game items across all Roblox games. With thousands of happy customers and verified sellers, we provide the safest way to enhance your Roblox experience. All transactions are secure and items are delivered instantly.
+        </p>
+
+        <h2 class="section-title" id="contact">Contact Us</h2>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                📧 Email: <strong>Jamestamundong2@gmail.com</strong><br>
+                💬 Discord: <strong>https://discord.gg/FzVTqnbmpb</strong><br>
+                📱 Live Chat: <strong>Available 24/7</strong>
+            </p>
+            <p style="color: #666;">Questions? Use our live chat or contact us anytime!</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Games</h3>
+                <ul>
+                    <li><a href="#">Adopt Me</a></li>
+                    <li><a href="#">Jailbreak</a></li>
+                    <li><a href="#">Anime Last Stand</a></li>
+                    <li><a href="#">Anime Vanguards</a></li>
+                    <li><a href="#">Anime Guardian</a></li>
+                    <li><a href="#">Murder Mystery 2</a></li>
+                    <li><a href="#">Robux</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Game Passes</a></li>
+                    <li><a href="#">In-Game Items</a></li>
+                    <li><a href="#">Pets & Cosmetics</a></li>
+                    <li><a href="#">Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                    <li><a href="#">Seller Agreement</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 RobloxItems Market. All rights reserved. | Not affiliated with Roblox Corporation</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product Database
+        const products = [
+            { id: 1, name: 'Diavolo', game: 'Anime Vanguards', price: 90, image: 'https://static.wikia.nocookie.net/f9fe9550-7fe5-4e05-8b24-f02fe4cbc0bb/scale-to-width/755' , category: 'Units', description: 'Exclusive Unit for Diavolo character' },
+            { id: 2, name: 'Birb', game: 'Anime Vanguards', price: 0.40, image: 'https://production-gameflipusercontent.fingershock.com/us-east-1:3f84d58d-459d-4519-a248-a4ca4c7dba79/c3571da4-7074-461d-9c49-3a947a226134/5ff0be4b-e724-4c85-9b2f-1ecb23bb87ac/640x640.webp' , category: 'Familiars', description: 'Buff for units in game' },
+            { id: 3, name: 'Robux per 1k', game: 'Robux ingame gift', price:4.99, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/500px-Robux_2019_Logo_gold.svg.png', category: 'In-game gift', description: 'You will tell me what game and what gamepass' },
+            { id: 4, name: 'All seeing eyes', game: 'grand piece online ', price: 24.99, image: 'https://static.wikia.nocookie.net/grand-piece-online/images/f/f3/Ase.png/revision/latest/thumbnail/width/360/height/360?cb=20230108093207', category: 'Item', description: 'Exlusive item in GPO' },
+            { id: 5, name: 'Dragon Fruit', game: 'Grand Piece Online', price: 16.99, image: 'https://static.wikia.nocookie.net/grand-piece-online/images/0/0d/Pteranodon_fruit_model.png/revision/latest/scale-to-width-down/1000?cb=20240628025302', category: 'Fruit', description: 'Exclusive dragon Fruit for grinding' },
+            { id: 6, name: 'Cupid All Seeing Eye', game: 'Grand Piece Online', price: 23.99, image: 'https://static.wikia.nocookie.net/grand-piece-online/images/c/c5/Cupid%27s_All_Seeing_Eye.png/revision/latest?cb=20260217140651', category: 'Item', description: 'Exlusive item in Gpo' },
+            { id: 7, name: 'Holly All seeing eye', game: 'Grand Piece Online', price: 24.99, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1a3Z6Y1jqF5ZbeUa0Cfm5bCT5Eb-RpO3orQ&s', category: 'Item', description: 'Exlusive item in gpo' },
+            { id: 8, name: 'Prestige Candy Cane', game: 'Grand Piece Online', price: 450, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBa8YxEsxePyLhx4oPfc3ZbVNQwPgOFJKeew&s', category: 'Item', description: 'Very Rare item in Gpo' }
+        ];
+
+        const API_BASE_URL = 'http://localhost:3000';
+        let currentFilter = '';
+
+        // Initialize products
+        function initProducts() {
+            displayProducts(products);
+            displayCart();
+            displaySalesData();
+
+            // Restore purchase data from localStorage if available
+            const storedData = localStorage.getItem('purchaseData');
+            if (storedData) {
+                try {
+                    window.purchaseData = JSON.parse(storedData);
+                } catch (e) {
+                    console.error('Error parsing stored purchase data:', e);
+                }
+            }
+        }
+
+        // Cart helpers
+        function getCart() {
+            return JSON.parse(localStorage.getItem('shoppingCart') || '[]');
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const cart = getCart();
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1
+                });
+            }
+
+            saveCart(cart);
+            displayCart();
+            alert(`${product.name} added to your shopping list.`);
+        }
+
+        function removeCartItem(index) {
+            const cart = getCart();
+            if (index < 0 || index >= cart.length) return;
+            cart.splice(index, 1);
+            saveCart(cart);
+            displayCart();
+        }
+
+        function getCartTotal() {
+            return getCart().reduce((sum, item) => sum + item.price * item.quantity, 0);
+        }
+
+        function displayCart() {
+            const cart = getCart();
+            const cartTableBody = document.getElementById('cartTableBody');
+            const cartTable = document.getElementById('cartTable');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartTotalSummary = document.getElementById('cartTotalSummary');
+
+            const total = getCartTotal();
+            cartTotalSummary.textContent = `Total: $${total.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                cartTable.style.display = 'none';
+                cartEmpty.style.display = 'block';
+                return;
+            }
+
+            cartTable.style.display = 'table';
+            cartEmpty.style.display = 'none';
+
+            cartTableBody.innerHTML = cart.map((item, index) => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                    <td><button class="cart-item-remove" onclick="removeCartItem(${index})">Remove</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function checkoutCart() {
+            const cart = getCart();
+            if (cart.length === 0) {
+                alert('Your shopping list is empty. Add items before checking out.');
+                return;
+            }
+
+            const username = prompt('Enter your Roblox username:');
+            if (!username) return;
+
+            const totalAmount = getCartTotal();
+            const itemName = cart.map(item => `${item.quantity}× ${item.name}`).join(', ');
+
+            window.purchaseData = {
+                itemName,
+                price: totalAmount,
+                username,
+                fromCart: true
+            };
+            localStorage.setItem('purchaseData', JSON.stringify(window.purchaseData));
+            openPaymentModal();
+        }
+
+        // Display products
+        function displayProducts(itemsToShow) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = itemsToShow.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span class="category-badge">${product.category}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-game">${product.game}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="cart-actions">
+                            <button class="btn btn-shop" onclick="addToCart(${product.id})">Add to Cart</button>
+                            <button class="btn btn-shop" onclick="purchaseItem('${product.name}', ${product.price})">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter items
+        function filterItems() {
+            const typeFilter = document.getElementById('itemType').value;
+            
+            if (typeFilter === '') {
+                displayProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === typeFilter);
+                displayProducts(filtered);
+            }
+        }
+
+        // Purchase item
+        function purchaseItem(itemName, price) {
+            window.purchaseData = {
+                itemName: itemName,
+                price: price,
+                username: ''
+            };
+
+            const username = prompt('Enter your Roblox username:');
+            if (!username) return;
+
+            window.purchaseData.username = username;
+            // Store in localStorage for persistence across PayPal redirect
+            localStorage.setItem('purchaseData', JSON.stringify(window.purchaseData));
+            openPaymentModal();
+        }
+
+        // Open payment modal
+        function openPaymentModal() {
+            const paymentMethods = [
+                { name: 'PayPal', icon: '💳', time: 'Instant' },
+                { name: 'Credit Card', icon: '💳', time: 'Instant' }
+            ];
+
+            const methodsList = document.getElementById('paymentMethodsList');
+            methodsList.innerHTML = paymentMethods.map(method => `
+                <button type="button" class="payment-method-btn" onclick="processPayment('${method.name}')">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${method.icon}</div>
+                    <strong>${method.name}</strong><br>
+                    <span style="color: #666; font-size: 0.9rem;">Delivery: ${method.time}</span>
+                </button>
+            `).join('');
+
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        // Close payment modal
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        // Process payment
+        function processPayment(method) {
+            const data = window.purchaseData;
+            
+            if (method === 'PayPal') {
+                // Ensure purchase data is in localStorage before redirecting
+                localStorage.setItem('purchaseData', JSON.stringify(data));
+                
+                // Call server to create PayPal payment
+                fetch(`${API_BASE_URL}/create-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: data.price.toString(),
+                        itemName: data.itemName
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(json => {
+                            throw new Error(json.message || json.error || `Server error: ${response.status}`);
+                        }).catch(e => {
+                            throw new Error(`Server responded ${response.status}: ${response.statusText}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(payment => {
+                    if (!payment.links || !Array.isArray(payment.links)) {
+                        throw new Error('Invalid payment response from server');
+                    }
+                    
+                    // Find the approval URL
+                    const approvalLink = payment.links.find(link => link.rel === 'approval_url');
+                    if (!approvalLink || !approvalLink.href) {
+                        throw new Error('No approval URL found in payment response');
+                    }
+                    
+                    console.log('Redirecting to PayPal approval URL:', approvalLink.href);
+                    closePayment();
+                    // Redirect to PayPal for approval
+                    window.location.href = approvalLink.href;
+                })
+                .catch(error => {
+                    console.error('Payment creation failed:', error);
+                    alert(`Payment failed: ${error.message || error}.\n\nMake sure the backend server is running with \"node server.js\" and open the store from http://localhost:3000.`);
+                    closePayment();
+                });
+            } else {
+                // For other methods, show message that they're not implemented yet
+                alert(`${method} payment method is not yet implemented. Please use PayPal.`);
+            }
+        }
+
+        // Payment completed
+        function completePayment() {
+            const data = window.purchaseData;
+            openChat();
+            
+            // Store sale in localStorage
+            const sale = {
+                id: generateSaleId(),
+                date: new Date().toISOString(),
+                item: data.itemName,
+                customer: data.username,
+                amount: data.price,
+                status: 'completed',
+                paymentId: localStorage.getItem('paymentId')
+            };
+            
+            addSaleToHistory(sale);
+            if (window.purchaseData && window.purchaseData.fromCart) {
+                localStorage.removeItem('shoppingCart');
+                displayCart();
+            }
+            displaySalesData();
+            
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="chat-message bot">
+                    <div class="chat-bubble">✓ Payment Received!</div>
+                </div>
+                <div class="chat-message bot">
+                    <div class="chat-bubble">Your purchase of "${data.itemName}" for $${data.price.toFixed(2)} is confirmed!</div>
+                </div>
+                <div class="chat-message bot">
+                    <div class="chat-bubble">Preparing to send item to @${data.username}...</div>
+                </div>
+                <div class="chat-message bot">
+                    <div class="chat-bubble">✓ Item will be sent to your account within 5 minutes!</div>
+                </div>
+                <div class="chat-message bot">
+                    <div class="chat-bubble">Thank you for your purchase! Need help?</div>
+                </div>
+            `;
+            
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        // Open chat
+        function openChat() {
+            document.getElementById('chatBox').classList.add('active');
+        }
+
+        // Close chat
+        function closeChat() {
+            document.getElementById('chatBox').classList.remove('active');
+        }
+
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chatMessages');
+            
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message user';
+            userMsg.innerHTML = `<div class="chat-bubble">${message}</div>`;
+            chatMessages.appendChild(userMsg);
+
+            input.value = '';
+
+            // Show typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'chat-message bot';
+            typingIndicator.innerHTML = `<div class="chat-bubble">Typing...</div>`;
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                typingIndicator.remove();
+
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-message bot';
+
+                const response = generateBotResponse(message);
+
+                botMsg.innerHTML = `<div class="chat-bubble">${response}</div>`;
+                chatMessages.appendChild(botMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 700);
+        }
+
+        // Simple AI-style response generator
+        function generateBotResponse(message) {
+            const text = message.toLowerCase();
+
+            const patterns = [
+                { match: /\b(hi|hello|hey|yo)\b/, responses: ['Hey there! How can I help you today?', 'Hello! Need help finding an item?', 'Hi! I\'m here to help.'] },
+                { match: /\b(order|purchase|buy|payment)\b/, responses: ['To complete a purchase, click Buy Now and follow the steps.', 'You can buy items using PayPal. Just select an item and click Buy Now.', 'If you need help placing an order, tell me which item you want.'] },
+                { match: /\b(item|deliver|arrive|inventory)\b/, responses: ['Items usually arrive within 5 minutes after payment.', 'If an item doesn\'t arrive, check your inventory and contact support.', 'I can track delivery status if you give me the order details.'] },
+                { match: /\b(refund|return|chargeback)\b/, responses: ['Refunds are available within 24 hours if the purchase fails.', 'To request a refund, send us the order ID and we\'ll help you.', 'Refunds usually take 1-3 business days to process.'] },
+                { match: /\b(thank|thanks)\b/, responses: ['You\'re welcome! Happy gaming 🎮', 'Anytime! Let me know if you need anything else.', 'Thanks for chatting!'] },
+                { match: /\b(help|support|assist)\b/, responses: ['I\'m here to help! What can I do for you today?', 'Tell me what you need assistance with and I\'ll do my best.', 'Need help with payment or delivery? Just ask!'] },
+            ];
+
+            for (const pattern of patterns) {
+                if (pattern.match.test(text)) {
+                    const responses = pattern.responses;
+                    return responses[Math.floor(Math.random() * responses.length)];
+                }
+            }
+
+            const fallback = [
+                'Can you share more details so I can help?',
+                'I\'m not sure about that, but I\'m happy to help with orders or payments.',
+                'Let me know what you need and I\'ll do my best.'
+            ];
+
+            return fallback[Math.floor(Math.random() * fallback.length)];
+        }
+
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Generate unique sale ID
+        function generateSaleId() {
+            return 'SALE_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Add sale to history in localStorage
+        function addSaleToHistory(sale) {
+            let salesHistory = JSON.parse(localStorage.getItem('salesHistory') || '[]');
+            salesHistory.unshift(sale);
+            // Keep only last 100 sales
+            if (salesHistory.length > 100) {
+                salesHistory = salesHistory.slice(0, 100);
+            }
+            localStorage.setItem('salesHistory', JSON.stringify(salesHistory));
+        }
+
+        // Get all sales from history
+        function getSalesHistory() {
+            return JSON.parse(localStorage.getItem('salesHistory') || '[]');
+        }
+
+        // Display sales data
+        function displaySalesData() {
+            const salesHistory = getSalesHistory();
+            const salesTableBody = document.getElementById('salesTableBody');
+            const noSalesMessage = document.getElementById('noSalesMessage');
+            const salesTable = document.getElementById('salesTable');
+            const salesStats = document.getElementById('salesStats');
+
+            if (salesHistory.length === 0) {
+                salesTable.style.display = 'none';
+                noSalesMessage.style.display = 'block';
+                salesStats.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Total Sales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$0.00</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Customers</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Show table and hide no sales message
+            salesTable.style.display = 'table';
+            noSalesMessage.style.display = 'none';
+
+            // Calculate statistics
+            const totalSales = salesHistory.length;
+            const totalRevenue = salesHistory.reduce((sum, sale) => sum + (sale.amount || 0), 0);
+            const uniqueCustomers = new Set(salesHistory.map(s => s.customer)).size;
+
+            // Display stats
+            salesStats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalSales}</div>
+                    <div class="stat-label">Total Sales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$${totalRevenue.toFixed(2)}</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${uniqueCustomers}</div>
+                    <div class="stat-label">Unique Customers</div>
+                </div>
+            `;
+
+            // Display sales table
+            salesTableBody.innerHTML = salesHistory.map(sale => `
+                <tr>
+                    <td>${new Date(sale.date).toLocaleString()}</td>
+                    <td>${sale.item}</td>
+                    <td>${sale.customer}</td>
+                    <td>$${(sale.amount || 0).toFixed(2)}</td>
+                    <td><span class="status-badge status-${sale.status}">${sale.status.charAt(0).toUpperCase() + sale.status.slice(1)}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // Check for payment completion on page load
+        function checkPaymentCompletion() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isComplete = urlParams.get('paymentComplete') === 'true';
+            const storedData = localStorage.getItem('purchaseData');
+            const paymentSuccess = localStorage.getItem('paymentSuccess');
+
+            if (isComplete && paymentSuccess && storedData) {
+                try {
+                    window.purchaseData = JSON.parse(storedData);
+                    completePayment();
+                    // Clean up localStorage
+                    localStorage.removeItem('paymentSuccess');
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (e) {
+                    console.error('Error processing payment completion:', e);
+                }
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            initProducts();
+            displaySalesData();
+            checkPaymentCompletion();
+        });
+    </script>
+</body>
+</html>
